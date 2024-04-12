@@ -1,0 +1,21 @@
+ body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  canvas {
+    border: 6px solid #201f1f;
+    border-bottom: transparent;
+    background-color: #201f1f;
+    /* background: url('bkg.png') repeat; */
+    margin: 10% auto;
+    display: block;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
+
+  }
+  .button_velocity{
+    width: 50px;
+    margin-left: 15px;
+  }
