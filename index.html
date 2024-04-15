@@ -6,14 +6,25 @@
   <title>Page Title</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jersey+25&display=swap" rel="stylesheet">
 </head>
 <body>
-  <title>Arkanoid</title>
-  <canvas></canvas>
-
+  <title>Pong</title>
+  <h1 class="title">Pin | Pong</h1>
   <div>
-    <button id= "speedUp" class="button_velocity"> + </button>
-    <button id= "speedDown"class="button_velocity"> - </button>
+
+    <div class ="board">
+    <canvas></canvas>
+      <div class="btn_speed">
+        <h2>Ball Velocity</h2>
+        <div>
+          <button id= "speedUp" class="button_velocity"> + </button>
+          <button id= "speedDown"class="button_velocity"> - </button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 <script src='script.js' type="text/javascript">
