@@ -20,6 +20,9 @@
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 
   }
+  .btn {
+    display: flex;
+  }
   .btn_speed{
   /* border: solid 1px solid; */   
     background-color: '#EDECEC';
@@ -32,6 +35,9 @@
     flex-direction: column;
     justify-content: flex start;
     align-items: center;
+  }
+  .btn_speed_Raquet {
+     margin-left: 15px
   }
   .button_velocity{
    
