@@ -379,12 +379,12 @@ class Game {
   constructor(context) {
     this.context = context;
     this.ball = new Ball(context);
-    this.player1 = new Raquet(context, "blue",10,40);
+    this.player1 = new Raquet(context, 'blue', 10, 40);
     this.player2 = new Raquet(context, 'green');
-    this.gol1 = new Raquet(context, '#282828', 10, 300);
-    this.gol2 = new Raquet(context, '#282828', 10, 300);
+    this.gol1 = new Raquet(context, '#423453', 10, 300);
+    this.gol2 = new Raquet(context, '#423453', 10, 300);
     //this.thing1 = new Thing(context,"purple")
-
+    
   }
   start() {
     this.ball.moveToPosition(
@@ -401,6 +401,7 @@ class Game {
       new Coordinate(canvas.width - 10, (canvas.height - 300) / 2)
     );
 
+
     //this.thing1.setPosition(new Coordinate(200,100))
 
     this.renderLoop();
@@ -409,17 +410,18 @@ class Game {
     const ballCollider = this.ball.getCollider();
     const player1Collider = this.player1.getCollider();
     const player2Collider = this.player2.getCollider();
+    this.score1 = 0;
     //Raqueta tiene un collider, (pelota también) y esto indica si chocan o no.
     //entre ellos
     if (ballCollider.collide(player1Collider)) {
-      const collision = ballCollider.collisionDirections(player1Collider)
-      if(collision.x && !collision.y){
+      const collision = ballCollider.collisionDirections(player1Collider);
+      if (collision.x && !collision.y) {
         this.ball.changeXDirection();
       }
-      if(!collision.x && collision.y){
+      if (!collision.x && collision.y) {
         this.ball.changeYDirection();
       }
-      if(collision.x && collision.y){
+      if (collision.x && collision.y) {
         this.ball.changeXDirection();
         this.ball.changeYDirection();
       }
@@ -438,7 +440,10 @@ class Game {
       }
     }
     if (this.gol1.getCollider().collide(ballCollider)) {
+      this.score1 = this.score1 += 1;
+      document.getElementById('score_player1').textContent = this.score1; 
       console.log('gol player1');
+      console.log();
     }
     if (this.gol2.getCollider().collide(ballCollider)) {
       console.log('gol player2');
@@ -459,6 +464,16 @@ class Game {
   }
   speedDownBall() {
     this.ball.speedDown(1.1);
+  }
+  scoreP1() {
+
+   return 1
+
+  }
+  scoreP2() {
+  return 1
+
+
   }
 }
 
@@ -481,6 +496,9 @@ document.getElementById('speedDownRaquet').addEventListener('click', () => {
   raquetSpeed -= 0.2;
   raquetSpeed = raquetSpeed < 1 ? 1 : raquetSpeed 
 });
+
+document.getElementById('score_player1').textContent = score1 
+console.log(score1 + game.scoreP1());
 
 addEventListener('keydown', (event) => {
   event.key === 'w' &&
