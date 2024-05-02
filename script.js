@@ -376,7 +376,12 @@ class Thing {
   }
 }
 class Game {
-  constructor(context) {
+  /**
+   * 
+   * @param {*} context 
+   * @param {*} onGoal (player: number, score) => void 
+   */
+  constructor(context, onGoal) {
     this.context = context;
     this.ball = new Ball(context);
     this.player1 = new Raquet(context, 'blue', 10, 40);
@@ -384,7 +389,11 @@ class Game {
     this.gol1 = new Raquet(context, '#423453', 10, 300);
     this.gol2 = new Raquet(context, '#423453', 10, 300);
     //this.thing1 = new Thing(context,"purple")
-    
+    this.onGoal = onGoal
+    this.score1 = 0
+    this.score2 = 0
+    this.lastGoal1 = false
+    this.lastGoal2 = false
   }
   start() {
     this.ball.moveToPosition(
@@ -410,7 +419,6 @@ class Game {
     const ballCollider = this.ball.getCollider();
     const player1Collider = this.player1.getCollider();
     const player2Collider = this.player2.getCollider();
-    this.score1 = 0;
     //Raqueta tiene un collider, (pelota también) y esto indica si chocan o no.
     //entre ellos
     if (ballCollider.collide(player1Collider)) {
@@ -439,15 +447,23 @@ class Game {
         this.ball.changeYDirection();
       }
     }
-    if (this.gol1.getCollider().collide(ballCollider)) {
-      this.score1 = this.score1 += 1;
-      document.getElementById('score_player1').textContent = this.score1; 
+    const isGoal1 = this.gol1.getCollider().collide(ballCollider)
+    if (isGoal1 && !this.lastGoal1) {
+     this.score1++
       console.log('gol player1');
-      console.log();
+      this.onGoal(1, this.score1)
     }
-    if (this.gol2.getCollider().collide(ballCollider)) {
+    const isGoal2=this.gol2.getCollider().collide(ballCollider)
+    if (isGoal2 && !this.lastGoal2) {
       console.log('gol player2');
+      this.score2++
+      this.lastGoal1 = false
+      this.lastGoal2 = true
+      this.onGoal(2, this.score2)
     }
+
+    this.lastGoal1 = isGoal1
+    this.lastGoal2 = isGoal2
 
     this.context.clearRect(0, 0, canvas.width, canvas.height);
     this.ball.draw();
@@ -465,19 +481,15 @@ class Game {
   speedDownBall() {
     this.ball.speedDown(1.1);
   }
-  scoreP1() {
-
-   return 1
-
-  }
-  scoreP2() {
-  return 1
-
-
-  }
 }
 
-const game = new Game(context);
+
+function onPlayerGoal(player, score) {
+  console.log('onplayerGoal', player, score)
+  document.getElementById(`score_player${player}`).textContent = score 
+}
+
+const game = new Game(context, onPlayerGoal);
 game.start();
 
 document.getElementById('speedUp').addEventListener('click', () => {
@@ -497,8 +509,8 @@ document.getElementById('speedDownRaquet').addEventListener('click', () => {
   raquetSpeed = raquetSpeed < 1 ? 1 : raquetSpeed 
 });
 
-document.getElementById('score_player1').textContent = score1 
-console.log(score1 + game.scoreP1());
+// document.getElementById('score_player1').textContent = 
+// console.log('gameScore', game.score1());
 
 addEventListener('keydown', (event) => {
   event.key === 'w' &&
@@ -517,6 +529,8 @@ addEventListener('keyup', (event) => {
   event.key === 'ArrowUp' && game.player2.setDirection(new Vector(0, 0));
   event.key === 'ArrowDown' && game.player2.setDirection(new Vector(0, 0));
 });
+
+
 
 //chequear si el estado de las teclas están apretadas o no si esta apretando los dos a la vez estate quieto.
 
