@@ -20,27 +20,34 @@
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 
   }
+  .score_panel{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    
+  }
   .btn {
     display: flex;
   }
   .btn_speed{
   /* border: solid 1px solid; */   
     background-color: '#EDECEC';
-    width: 150px;
+    width: 250px;
     height: 100px;
     border-color: black;
     border-width: 1px;
     border-style: solid;
     display: flex;
-    flex-direction: column;
-    justify-content: flex start;
+    flex-direction: column;    
     align-items: center;
+  }
+  .speed_raquet{
+    margin:0;
   }
   .btn_speed_Raquet {
      margin-left: 15px
   }
   .button_velocity{
-   
     width: 50px;
     background-color: black;
     color:white;
@@ -50,4 +57,7 @@
   }
   .button_velocity:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+h3{
+  margin:2px 0px;
 }
