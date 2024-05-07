@@ -380,8 +380,9 @@ class Game {
    * 
    * @param {*} context 
    * @param {*} onGoal (player: number, score) => void 
+   * @param {*} speedData (type: ball|raquet1|raquet2, data: number) => void 
    */
-  constructor(context, onGoal) {
+  constructor(context, onGoal, speedData) {
     this.context = context;
     this.ball = new Ball(context);
     this.player1 = new Raquet(context, 'blue', 10, 40);
@@ -394,6 +395,12 @@ class Game {
     this.score2 = 0
     this.lastGoal1 = false
     this.lastGoal2 = false
+    this.ballSpeedNum = 0
+    this.raquet1SpeedNum = 0
+    this.raquet2SpeedNum = 0
+    this.speedDataBall = speedDataBall
+
+    
   }
   start() {
     this.ball.moveToPosition(
@@ -410,8 +417,6 @@ class Game {
       new Coordinate(canvas.width - 10, (canvas.height - 300) / 2)
     );
 
-
-    //this.thing1.setPosition(new Coordinate(200,100))
 
     this.renderLoop();
   }
@@ -447,11 +452,15 @@ class Game {
         this.ball.changeYDirection();
       }
     }
+
+    let reset = false
+
     const isGoal1 = this.gol1.getCollider().collide(ballCollider)
     if (isGoal1 && !this.lastGoal1) {
      this.score1++
       console.log('gol player1');
       this.onGoal(1, this.score1)
+      reset = true
     }
     const isGoal2=this.gol2.getCollider().collide(ballCollider)
     if (isGoal2 && !this.lastGoal2) {
@@ -460,6 +469,7 @@ class Game {
       this.lastGoal1 = false
       this.lastGoal2 = true
       this.onGoal(2, this.score2)
+      reset = true
     }
 
     this.lastGoal1 = isGoal1
@@ -471,15 +481,37 @@ class Game {
     this.player2.draw();
     this.gol1.draw();
     this.gol2.draw();
+
+    //si reset es true entonces ejecuta this.start() si no, no hace nada.
+    reset && this.reset()
+
+
     window.requestAnimationFrame(() => {
       this.renderLoop();
     });
   }
   speedUpBall() {
+    this.ballSpeedNum++
+    this.speedDataBall('ball', this.ballSpeedNum)
     this.ball.speedUp(1.1);
+
   }
   speedDownBall() {
+    this.ballSpeedNum--
+    this.speedDataBall('ball', this.ballSpeedNum)
     this.ball.speedDown(1.1);
+  }
+  reset() {
+    //guardar el last estado de setdirection raquet y de ball
+    this.ball.moveToPosition(
+      new Coordinate(canvas.width / 2, canvas.height / 2)
+    );
+    this.ball.setDirection(new Vector(0, 0));
+  
+  }
+  continue() {
+   console.log('continue')
+    this.ball.setDirection(new Vector(1, -1));
   }
 }
 
@@ -487,6 +519,13 @@ class Game {
 function onPlayerGoal(player, score) {
   console.log('onplayerGoal', player, score)
   document.getElementById(`score_player${player}`).textContent = score 
+}
+
+function speedDataBall (data, vel){ 
+  console.log(data, vel)
+  document.getElementById('speed_ball').textContent = vel
+  //document.getElementById(`speed_${type}`).textContent = data
+  
 }
 
 const game = new Game(context, onPlayerGoal);
@@ -501,13 +540,17 @@ document.getElementById('speedDown').addEventListener('click', () => {
 
 
 let raquetSpeed = 3
+let raquetN = 1
 document.getElementById('speedUpRaquet').addEventListener('click', () => {
   raquetSpeed+= 0.2
+
 });
 document.getElementById('speedDownRaquet').addEventListener('click', () => {
   raquetSpeed -= 0.2;
   raquetSpeed = raquetSpeed < 1 ? 1 : raquetSpeed 
+
 });
+
 
 // document.getElementById('score_player1').textContent = 
 // console.log('gameScore', game.score1());
@@ -528,6 +571,7 @@ addEventListener('keyup', (event) => {
   event.key === 's' && game.player1.setDirection(new Vector(0, 0));
   event.key === 'ArrowUp' && game.player2.setDirection(new Vector(0, 0));
   event.key === 'ArrowDown' && game.player2.setDirection(new Vector(0, 0));
+  event.key === 'Backspace'  && game.continue()
 });
 
 
