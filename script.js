@@ -460,7 +460,7 @@ class Game {
      this.score1++
       console.log('gol player1');
       this.onGoal(1, this.score1)
-      reset = true
+      this.reset('player1')
     }
     const isGoal2=this.gol2.getCollider().collide(ballCollider)
     if (isGoal2 && !this.lastGoal2) {
@@ -469,7 +469,7 @@ class Game {
       this.lastGoal1 = false
       this.lastGoal2 = true
       this.onGoal(2, this.score2)
-      reset = true
+      this.reset('player2')
     }
 
     this.lastGoal1 = isGoal1
@@ -483,7 +483,7 @@ class Game {
     this.gol2.draw();
 
     //si reset es true entonces ejecuta this.start() si no, no hace nada.
-    reset && this.reset()
+    //reset && this.reset()
 
 
     window.requestAnimationFrame(() => {
@@ -501,8 +501,20 @@ class Game {
     this.speedDataBall('ball', this.ballSpeedNum)
     this.ball.speedDown(1.1);
   }
-  reset() {
+  reset(winner) {
     //guardar el last estado de setdirection raquet y de ball
+    this.ballDirection = this.ball.direction
+
+    console.log('antes', this.ballDirection)
+    if(winner === 'player2') {
+      this.ballDirection = (new Vector (this.ballDirection.x , this.player1.direction.y +2)) 
+      console.log('despues',this.ballDirection)
+
+    } else {
+      this.ballDirection = (new Vector (-this.ballDirection.x , this.player1.direction.y +2)) 
+    }
+    this.player1Direction = this.player1.direction
+    this.player2Direction = this.player2.direction
     this.ball.moveToPosition(
       new Coordinate(canvas.width / 2, canvas.height / 2)
     );
@@ -511,7 +523,9 @@ class Game {
   }
   continue() {
    console.log('continue')
-    this.ball.setDirection(new Vector(1, -1));
+    this.ball.setDirection(new Vector(this.ballDirection.x, this.ballDirection.y));
+    this.player1.setDirection(new Vector (this.player1Direction.x, this.player1Direction.y))
+    this.player2.setDirection(new Vector (this.player2Direction.x, this.player2Direction.y))
   }
 }
 
