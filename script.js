@@ -560,15 +560,23 @@ document.getElementById('speedDown').addEventListener('click', () => {
 
 
 let raquetSpeed = 3
-let raquetN = 1
+let raquetN = 10
 document.getElementById('speedUpRaquet').addEventListener('click', () => {
   raquetSpeed+= 0.2
-
+  raquetN++
+  document.getElementById('speed_raquet').textContent = raquetN;
 });
 document.getElementById('speedDownRaquet').addEventListener('click', () => {
   raquetSpeed -= 0.2;
-  raquetSpeed = raquetSpeed < 1 ? 1 : raquetSpeed 
-
+  raquetN--
+  console.log('raquetSpeed', raquetSpeed);
+  console.log('raquetN', raquetN);
+  if (raquetSpeed < 1) {
+    console.log('HE LLEGADO', raquetSpeed)
+    raquetSpeed = 1
+    raquetN = 0
+  } 
+  document.getElementById('speed_raquet').textContent = raquetN;
 });
 
 
