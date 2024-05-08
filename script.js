@@ -270,7 +270,7 @@ class Ball {
   }
 }
 class Raquet {
-  constructor(context, color,width=10,height=40) {
+  constructor(context, color, width = 10, height = 40) {
     this.context = context;
     this.position = new Coordinate(0, 0);
     this.direction = new Vector(0, 0);
@@ -285,14 +285,31 @@ class Raquet {
   setDirection(vector) {
     this.direction = vector;
   }
+  // move() {
+  //   if(this.position.y <=1) {
+  //     this.position.y = 2
+  //   } else if(this.position.y  + this.height >= canvas.height ) {
+  //  this.position.y = canvas.height -1
+  //   }
+  //   this.position.x = this.position.x + this.direction.x
+  //   this.position.y = this.position.y + this.direction.y
+  // }
   move() {
-    //hazlo solo si no me salgo de la pantalla si me salgo me paro
-    this.position.x += this.direction.x
-    this.position.y += this.direction.y;
+    //estas dos variables guardan la siguiente posición
+    const x = this.position.x + this.direction.x;
+    const y = this.position.y + this.direction.y;
+
+    //Se evalua si se va a salir en el siguiente movimiento si va a salirse entonces no se mueve return
+    if (y <= 1) {
+      return;
+    } else if (y + this.height >= canvas.height) {
+      return;
+    }
+    this.position.x = x;
+    this.position.y = y;
   }
   draw() {
     this.move();
-    this.checkCollisions();
     //console.log('raquet', raquetP);
     this.context.beginPath();
     //posición, radio, angulo inicio final
@@ -307,19 +324,9 @@ class Raquet {
     this.context.fill();
     this.context.closePath();
   }
-  //Cambio de dirección
-  checkCollisions() {
-    if (this.position.y < 0) {
-      this.direction.y *= -1;
-    }
-    if (this.position.y + this.height > canvas.height) {
-      this.direction.y *= -1;
-    }
-  
-  }
-//Raqueta tiene un collider
-  getCollider() {
 
+  //Raqueta tiene un collider
+  getCollider() {
     return new Collider(
       new Coordinate(this.position.x, this.position.y),
       new Coordinate(
@@ -409,7 +416,7 @@ class Game {
     this.ball.setDirection(new Vector(1, -1));
     this.player1.setPosition(new Coordinate(40, 20));
     this.player1.setDirection(new Vector(0, 0));
-    this.player2.setPosition(new Coordinate(650, 210));
+    this.player2.setPosition(new Coordinate(650, 220));
     this.player2.setDirection(new Vector(0, 0));
 
     this.gol1.setPosition(new Coordinate(0, (canvas.height - 300) / 2));
@@ -581,11 +588,12 @@ addEventListener('keydown', (event) => {
 });
 
 addEventListener('keyup', (event) => {
+  //console.log('->'+event.key+'<-')
   event.key === 'w' && game.player1.setDirection(new Vector(0, 0));
   event.key === 's' && game.player1.setDirection(new Vector(0, 0));
   event.key === 'ArrowUp' && game.player2.setDirection(new Vector(0, 0));
   event.key === 'ArrowDown' && game.player2.setDirection(new Vector(0, 0));
-  event.key === 'Backspace'  && game.continue()
+  event.key === ' '  && game.continue()
 });
 
 

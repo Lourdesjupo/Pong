@@ -1,9 +1,25 @@
+@font-face {
+    font-family: "Connection";
+    src: url("Connection.otf");
+    font-weight: normal;
+   
+}
+@font-face {
+    font-family: "Connection";
+    src: url("ConnectionBold.otf");
+    font-weight:bold;
+}
+ 
+ 
  body {
     background-color: #f0f0f0;
-    font-family: "Jersey 25", sans-serif;
+    font-family: "Connection", sans-serif;
+   
   }
   .title{
     text-align: center;  
+    margin-top:0px;
+    margin-bottom:5px;
   }
   .board{
     display: flex;
@@ -11,14 +27,14 @@
     align-items: center;
   }
   p{
-    margin:8px;
+    margin:5px;
   }
   canvas {
     border: 6px solid #201f1f;
     border-bottom: transparent;
     background-color: #201f1f;
     /* background: url('bkg.png') repeat; */
-    margin: 1% auto;
+    margin:  auto;
     display: block;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
 
@@ -31,9 +47,11 @@
   }
   .btn {
     display: flex;
+    
   }
   .btn_speed{
   /* border: solid 1px solid; */   
+  margin-top:8px;
     background-color: '#EDECEC';
     width: 180px;
     height: 90px;
@@ -49,14 +67,14 @@
 
   }
   .speed_raquet{
-    margin:0px 0px;
+    margin:0px;
   }
   .btn_speed_Raquet {
      margin-left: 15px
   }
   .button_velocity{
 
-    width: 50px;
+    width: 40px;
     border-radius:15px;
     background-color: black;
     color:white;
@@ -69,4 +87,21 @@
 }
 h3{
   margin:3px 0px;
+}
+.legend {
+  display:flex;
+  flex-direction: row;
+}
+bold {
+color:rgb(0, 162, 255);
+font-weight: bold;
+}
+
+.spacebar{
+  text-align: center;
+  margin-right: 100px;
+  margin-top:15px
+}
+.pinpon{
+  width: 100px;
 }

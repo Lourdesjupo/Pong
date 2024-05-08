@@ -12,23 +12,40 @@
 </head>
 <body>
   <title>Pong</title>
-  <h1 class="title">Pin | Pong</h1>
-          
+    <h1 class="title">Don Pin Pon </h1>
+        
     <div class ="score_panel">
+      <div>            
+        <legend>Player1</legend>
+        <p><bold>W</bold> Up</p>
+        <p><bold>S</bold> Down</p></div>
+        
       <div>
         <h3>Score Player 1</h3>
         <p id="score_player1">0</p>
       </div>
+    <img class="pinpon" src="./donpinpon.png">
       <div>
         <h3>Score Player 2</h3>
         <p id="score_player2">0</p>
       </div>
+      <div>
+        <legend>Player2</legend>
+        <p><bold>⬆️</bold> Up</p>
+        <p><bold>⬇️</bold> Down</p>
+      </div>
     </div>
     <div class ="board">
     <canvas></canvas>
+
       <div class="btn">
+        <div class ="spacebar">
+          <p><bold>Spacebar</bold></p>
+          <p> for continue </p>
+          <p>after a goal</p>
+        </div>
         <div class="btn_speed">
-          <h3>Ball speed</h3>
+          <p>Ball speed</p>
           <p id="speed_ball">0</p>
           <div>
             <button id= "speedDown"class="button_velocity"> - </button>
@@ -36,12 +53,13 @@
           </div>
         </div>
         <div class="btn_speed btn_speed_Raquet">
-          <h3>Raquet speed</h3>
+          <p>Raquet speed</p>
           <p id="speed_raquet">0</p>
           <div>
             <button id= "speedDownRaquet"class="button_velocity"> - </button>
             <button id= "speedUpRaquet" class="button_velocity"> + </button>
           </div>
+
         </div>
       </div>
     </div>
