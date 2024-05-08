@@ -546,7 +546,6 @@ function speedDataBall (data, vel){
   console.log(data, vel)
   document.getElementById('speed_ball').textContent = vel
   //document.getElementById(`speed_${type}`).textContent = data
-  
 }
 
 const game = new Game(context, onPlayerGoal);
